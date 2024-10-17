@@ -1,0 +1,13 @@
+18:09:50.651 [main] INFO  - Starting FirefoxDriver and launching login page
+18:09:56.163 [main] INFO  - Clicked On the NEw Button
+18:10:00.774 [main] INFO  - Enter Name Suraj
+18:10:09.111 [main] INFO  - Selecting Press from the Type
+18:10:09.576 [main] INFO  - Entered Wesite Link Bhadwagiri.com
+18:10:09.648 [main] INFO  - Phone Number Entered Successfully 8867462885
+18:10:09.713 [main] INFO  - Description entered 
+18:10:09.896 [main] INFO  - email entered successfully
+18:10:09.974 [main] INFO  - Employee name entered Successfully
+18:10:10.261 [main] INFO  - Clicked on Industry
+18:10:10.549 [main] INFO  - Banking option selected successfully
+18:10:11.802 [main] INFO  -  Search successfull in Billing Address
+18:10:13.051 [main] INFO  -  Search successfull in shipping Address

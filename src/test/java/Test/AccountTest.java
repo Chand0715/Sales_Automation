@@ -1,6 +1,7 @@
 package Test;
+
+import Action.AccountAction;
 import Action.LoginAction;
-import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -8,46 +9,46 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.io.FileHandler;
-import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 import Enum.LoginConstants;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
-public class Logintest {
-        private WebDriver driver;
-        private LoginAction loginAction;
-    static Logger log = LogManager.getLogger(Logintest.class); ;
-        @BeforeClass
-        public void setUp() {
-            FirefoxProfile profile=new FirefoxProfile();
-            profile.setPreference("geo.enabled", false);
-            FirefoxOptions options=new FirefoxOptions();
-            options.setProfile(profile);
-            driver=new FirefoxDriver(options);
-            loginAction = new LoginAction(driver);
-            log.info("Starting FirefoxDriver and launching login page");
-            try{
-                driver.get(LoginConstants.url);
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-                log.error("Exception Occured", new Exception ("Element not found"));
-            }
-        }
-        @Test
-        public void LoginTest() {
-            loginAction.login(LoginConstants.username, LoginConstants.password);
-        }
+import static Test.Logintest.log;
 
+public class AccountTest {
+    private WebDriver driver;
+    private LoginAction loginAction;
+    @BeforeClass
+    public void setUp() {
+        FirefoxProfile profile=new FirefoxProfile();
+        profile.setPreference("geo.enabled", false);
+        profile.setPreference("permissions.default.desktop-notification", 2);// 1: allow, 2: block
+        profile.setPreference("permissions.default.geo", 2);
+        FirefoxOptions options=new FirefoxOptions();
+        options.setProfile(profile);
+        driver = new FirefoxDriver(options);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        loginAction = new LoginAction(driver);
+        log.info("Starting FirefoxDriver and launching login page");
+        try{
+            driver.get(LoginConstants.url);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            log.error("Exception Occured", new Exception ("Element not found"));
+        }
+    }
+    @Test
+    public void AccountTest() throws InterruptedException {
+        loginAction.login(LoginConstants.username, LoginConstants.password);
+        AccountAction accountAction=new AccountAction(driver);
+        accountAction.AccountPage("Suraj","Bhadwagiri.com","8867462885","hello","chandinikumari@gmail.com","30","Bangalore","california");
+    }
     @AfterMethod
     public void captureFailureScreenshot(ITestResult result) {
         if (ITestResult.FAILURE == result.getStatus()) {
@@ -69,11 +70,4 @@ public class Logintest {
             }
         }
     }
-        @AfterClass
-        public void tearDown() {
-              driver.quit();
-            }
-       }
-
-
-
+}
